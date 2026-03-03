@@ -36,7 +36,19 @@ run_scripts_in() {
   fi
 }
 
-# ─── 1. Clone repo if missing ───────────────────────────────────────────────
+# ─── 1. Ensure git and curl are available ────────────────────────────────────
+ensure_prerequisites() {
+  for cmd in git curl sudo; do
+    if ! command -v "$cmd" &>/dev/null; then
+      echo "Installing $cmd..."
+      apt-get update -qq 2>/dev/null || true
+      apt-get install -y -qq git curl sudo
+      break
+    fi
+  done
+}
+
+# ─── 2. Clone repo if missing ───────────────────────────────────────────────
 clone_dotfiles() {
   if [ -d "$DOTFILES_DIR/.git" ]; then
     info "Dotfiles repo already present at $DOTFILES_DIR"
@@ -133,6 +145,7 @@ main() {
   echo "╚══════════════════════════════════════╝"
   echo ""
 
+  ensure_prerequisites
   clone_dotfiles
   install_apt
   install_snap
