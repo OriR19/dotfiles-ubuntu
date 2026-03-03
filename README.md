@@ -1,55 +1,61 @@
 # Dotfiles
 
-Managed with [GNU Stow](https://www.gnu.org/software/stow/).
+Managed with [GNU Stow](https://www.gnu.org/software/stow/). Modular install scripts — just drop a `.sh` file in the right folder.
+
+## One-liner setup on a new machine
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/OriR19/dotfiles/main/install.sh)
+```
+
+> This clones the repo, installs all tools, and symlinks all configs. Works on any fresh Ubuntu/Debian machine.
 
 ## Structure
 
-Each top-level directory is a stow "package" that mirrors the home directory layout:
-
 ```
 ~/.dotfiles/
-├── bash/           # .bashrc, .bash_logout, .bash_carapace
-├── git/            # .gitconfig
-├── inputrc/        # .inputrc
-├── profile/        # .profile
-├── starship/       # .config/starship.toml
-├── carapace/       # .config/carapace/
-├── thefuck/        # .config/thefuck/
-├── fonts/          # .fonts/
-└── vim/            # .viminfo
+├── install.sh              # Self-bootstrapping entry point (curl-able)
+├── scripts/
+│   ├── apt/                # *.sh → auto-installed via apt
+│   │   ├── base-deps.sh
+│   │   ├── carapace.sh
+│   │   ├── fzf.sh
+│   │   ├── stow.sh
+│   │   ├── vim.sh
+│   │   └── zoxide.sh
+│   ├── brew/               # *.sh → installed via Homebrew (for brew-only packages)
+│   │   └── thefuck.sh
+│   └── custom/             # *.sh → custom install logic (curl installers etc.)
+│       ├── homebrew.sh
+│       └── starship.sh
+├── bash/                   # stow: .bashrc, .bash_logout, .bash_carapace
+├── git/                    # stow: .gitconfig
+├── inputrc/                # stow: .inputrc
+├── profile/                # stow: .profile
+├── starship/               # stow: .config/starship.toml
+├── carapace/               # stow: .config/carapace/
+├── thefuck/                # stow: .config/thefuck/
+├── fonts/                  # stow: .fonts/
+└── vim/                    # stow: .viminfo
 ```
 
-## Usage
+## Adding a new tool
 
-### Install all packages
+Just drop a shell script in the right folder:
+
 ```bash
-cd ~/.dotfiles
-stow bash git inputrc profile starship carapace thefuck fonts vim
+# Example: add bat via apt
+echo 'sudo apt-get install -y -qq bat' > scripts/apt/bat.sh
+git add scripts/apt/bat.sh && git commit -m "Add bat"
 ```
 
-### Install a single package
-```bash
-cd ~/.dotfiles
-stow bash
-```
+No changes to `install.sh` needed — it auto-discovers all `*.sh` files.
 
-### Uninstall a package
-```bash
-cd ~/.dotfiles
-stow -D bash
-```
-
-### Re-stow (useful after adding new files to a package)
-```bash
-cd ~/.dotfiles
-stow -R bash
-```
-
-## Setup on a new machine
+## Manual stow commands
 
 ```bash
-sudo apt install stow
-git clone <repo-url> ~/.dotfiles
 cd ~/.dotfiles
-stow bash git inputrc profile starship carapace thefuck fonts vim
+stow bash              # stow a single package
+stow -D bash           # unstow a package
+stow -R bash           # re-stow (after restructuring)
 ```

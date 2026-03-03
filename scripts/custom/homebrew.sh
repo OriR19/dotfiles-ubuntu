@@ -1,0 +1,9 @@
+# Install Homebrew (linuxbrew)
+# Only used for packages that aren't available via apt/snap
+if command -v brew &>/dev/null; then
+  info "Homebrew already installed"
+else
+  info "Installing Homebrew..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+fi
