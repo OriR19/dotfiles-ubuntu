@@ -1,0 +1,4 @@
+# Ignore vim session/undo files that change constantly
+*.swp
+*.swo
+*~
