@@ -2,13 +2,35 @@
 
 Managed with [GNU Stow](https://www.gnu.org/software/stow/). Modular install scripts — just drop a `.sh` file in the right folder.
 
-## One-liner setup on a new machine
+## Quick Setup
+
+### One-liner (curl)
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/OriR19/dotfiles/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/OriR19/dotfiles-ubuntu/main/install.sh)
 ```
 
-> This clones the repo, installs all tools, and symlinks all configs. Works on any fresh Ubuntu/Debian machine.
+### Manual clone
+
+```bash
+git clone https://github.com/OriR19/dotfiles-ubuntu.git ~/.dotfiles
+cd ~/.dotfiles && ./install.sh
+```
+
+## What the installer does
+
+The `install.sh` script is fully self-bootstrapping — it can run on a bare Ubuntu/Debian machine:
+
+1. **Clone** — If `~/.dotfiles` doesn't exist, it clones the repo from GitHub
+2. **APT packages** — Runs every `scripts/apt/*.sh` (stow, fzf, vim, terraform, docker, gcloud, etc.)
+3. **Snap packages** — Runs every `scripts/snap/*.sh` (kubectl, helm)
+4. **Custom installers** — Runs every `scripts/custom/*.sh` (Homebrew, Starship via curl)
+5. **Brew packages** — Runs every `scripts/brew/*.sh` (thefuck — brew-only)
+6. **Stow configs** — Symlinks all dotfile packages (bash, vim, starship, etc.) to `$HOME`
+7. **Post-install** — Rebuilds font cache
+8. **Git + SSH setup** *(interactive, opt-in)* — Prompts for git name/email, generates an SSH key, and optionally registers it with GitHub via `gh ssh-key add`
+
+Every install script is independent — you can run any one of them individually without breaking the others.
 
 ## Structure
 

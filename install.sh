@@ -2,7 +2,7 @@
 set -e
 
 # ─── Config ─────────────────────────────────────────────────────────────────
-DOTFILES_REPO="https://github.com/OriR19/dotfiles.git"  # ← UPDATE THIS
+DOTFILES_REPO="https://github.com/OriR19/dotfiles-ubuntu.git"
 DOTFILES_DIR="$HOME/.dotfiles"
 SCRIPTS_DIR="$DOTFILES_DIR/scripts"
 
