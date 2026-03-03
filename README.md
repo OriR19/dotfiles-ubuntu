@@ -16,27 +16,37 @@ bash <(curl -fsSL https://raw.githubusercontent.com/OriR19/dotfiles/main/install
 ~/.dotfiles/
 ├── install.sh              # Self-bootstrapping entry point (curl-able)
 ├── scripts/
+│   ├── helpers.sh          # Shared colored output helpers
+│   ├── git-setup.sh        # Interactive: git identity + SSH key for GitHub
 │   ├── apt/                # *.sh → auto-installed via apt
 │   │   ├── base-deps.sh
 │   │   ├── carapace.sh
+│   │   ├── docker.sh
 │   │   ├── fzf.sh
+│   │   ├── gcloud.sh
+│   │   ├── jq.sh
+│   │   ├── nodejs.sh
 │   │   ├── stow.sh
+│   │   ├── terraform.sh
+│   │   ├── tree-tmux.sh
 │   │   ├── vim.sh
 │   │   └── zoxide.sh
-│   ├── brew/               # *.sh → installed via Homebrew (for brew-only packages)
+│   ├── snap/               # *.sh → installed via snap
+│   │   ├── helm.sh
+│   │   └── kubectl.sh
+│   ├── brew/               # *.sh → Homebrew (for brew-only packages)
 │   │   └── thefuck.sh
 │   └── custom/             # *.sh → custom install logic (curl installers etc.)
 │       ├── homebrew.sh
 │       └── starship.sh
 ├── bash/                   # stow: .bashrc, .bash_logout, .bash_carapace
-├── git/                    # stow: .gitconfig
 ├── inputrc/                # stow: .inputrc
 ├── profile/                # stow: .profile
 ├── starship/               # stow: .config/starship.toml
 ├── carapace/               # stow: .config/carapace/
 ├── thefuck/                # stow: .config/thefuck/
-├── fonts/                  # stow: .fonts/
-└── vim/                    # stow: .viminfo
+├── fonts/                  # stow: .fonts/ (JetBrains Mono Nerd Font)
+└── vim/                    # stow: .vimrc, .viminfo
 ```
 
 ## Adding a new tool
