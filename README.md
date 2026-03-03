@@ -46,6 +46,7 @@ Every install script is independent — you can run any one of them individually
 │   │   ├── docker.sh
 │   │   ├── fzf.sh
 │   │   ├── gcloud.sh
+│   │   ├── gh-cli.sh
 │   │   ├── jq.sh
 │   │   ├── nodejs.sh
 │   │   ├── stow.sh

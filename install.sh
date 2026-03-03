@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 # ─── Config ─────────────────────────────────────────────────────────────────
 DOTFILES_REPO="https://github.com/OriR19/dotfiles-ubuntu.git"
@@ -48,7 +48,7 @@ ensure_prerequisites() {
   done
 }
 
-# ─── 2. Clone repo if missing ───────────────────────────────────────────────
+# ─── 2. Clone repo if missing ────────────────────────────────────────────────
 clone_dotfiles() {
   if [ -d "$DOTFILES_DIR/.git" ]; then
     info "Dotfiles repo already present at $DOTFILES_DIR"
@@ -62,14 +62,14 @@ clone_dotfiles() {
   source "$SCRIPTS_DIR/helpers.sh" 2>/dev/null || true
 }
 
-# ─── 2. APT packages ────────────────────────────────────────────────────────
+# ─── 3. APT packages ────────────────────────────────────────────────────────
 install_apt() {
   section "APT packages"
   sudo apt-get update -qq
   run_scripts_in "$SCRIPTS_DIR/apt" "apt"
 }
 
-# ─── 3. Snap packages ───────────────────────────────────────────────────────
+# ─── 4. Snap packages ───────────────────────────────────────────────────────
 install_snap() {
   section "Snap packages"
   if command -v snap &>/dev/null; then
@@ -79,13 +79,13 @@ install_snap() {
   fi
 }
 
-# ─── 4. Custom installers (curl scripts, etc.) ──────────────────────────────
+# ─── 5. Custom installers (curl scripts, etc.) ──────────────────────────────
 install_custom() {
   section "Custom installers"
   run_scripts_in "$SCRIPTS_DIR/custom" "custom"
 }
 
-# ─── 5. Brew packages (only for things not in apt/snap) ─────────────────────
+# ─── 6. Brew packages (only for things not in apt/snap) ─────────────────────
 install_brew() {
   section "Brew packages"
   if command -v brew &>/dev/null; then
@@ -97,7 +97,7 @@ install_brew() {
   fi
 }
 
-# ─── 6. Stow all packages ───────────────────────────────────────────────────
+# ─── 7. Stow all packages ───────────────────────────────────────────────────
 stow_packages() {
   section "Stowing dotfiles"
   cd "$DOTFILES_DIR"
@@ -115,7 +115,7 @@ stow_packages() {
   done
 }
 
-# ─── 7. Post-install ────────────────────────────────────────────────────────
+# ─── 8. Post-install ────────────────────────────────────────────────────────
 post_install() {
   section "Post-install"
   if command -v fc-cache &>/dev/null && [ -d "$HOME/.fonts" ]; then
@@ -125,7 +125,7 @@ post_install() {
   info "Done! Restart your shell or run:  source ~/.bashrc"
 }
 
-# ─── 8. Interactive setup (git identity + SSH keys) ─────────────────────────
+# ─── 9. Interactive setup (git identity + SSH keys) ─────────────────────────
 interactive_setup() {
   section "Interactive setup"
   local git_setup="$SCRIPTS_DIR/git-setup.sh"
