@@ -58,8 +58,12 @@ Every install script is independent — you can run any one of them individually
 │   │   ├── helm.sh
 │   │   └── kubectl.sh
 │   ├── brew/               # *.sh → Homebrew (for brew-only packages)
+│   │   ├── diffnav.sh
+│   │   ├── gum.sh
 │   │   └── thefuck.sh
 │   └── custom/             # *.sh → custom install logic (curl installers etc.)
+│       ├── gh-dash.sh
+│       ├── gh-enhance.sh
 │       ├── homebrew.sh
 │       └── starship.sh
 ├── bash/                   # stow: .bashrc, .bash_logout, .bash_carapace
@@ -68,6 +72,7 @@ Every install script is independent — you can run any one of them individually
 ├── starship/               # stow: .config/starship.toml
 ├── carapace/               # stow: .config/carapace/
 ├── thefuck/                # stow: .config/thefuck/
+├── gh-dash/                # stow: .config/gh-dash/config.yml
 ├── fonts/                  # stow: .fonts/ (JetBrains Mono Nerd Font)
 └── vim/                    # stow: .vimrc, .viminfo
 ```
